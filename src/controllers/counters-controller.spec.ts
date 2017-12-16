@@ -146,4 +146,27 @@ describe("Counters controller", () => {
                     });
             });
     });
+
+    it("GET should return an counter not yet set with default value and add it to the counters list", (done) => {
+        chai.request(app)
+            .get("/counters/1")
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(1);
+                expect(counter.value).to.equal(0);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(3);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
+            });
+    });
 });
