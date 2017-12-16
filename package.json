@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development nodemon ./bin/www",
+    "dev": "nodemon ./bin/www",
     "gulp": "gulp",
     "start": "node ./bin/www",
     "test": "mocha dist/src/**/*.spec.js",

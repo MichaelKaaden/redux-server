@@ -12,10 +12,10 @@ const expect = chai.expect;
 //     app = require("../app").default;
 // });
 
-describe("User controller", () => {
+describe("Values controller", () => {
     it("should not fail", (done) => {
         chai.request(app)
-            .get("/users")
+            .get("/values")
             .end((err, response) => {
                 expect(err).to.be.null;
                 done();
@@ -24,7 +24,7 @@ describe("User controller", () => {
 
     it("should return status 200", (done) => {
         chai.request(app)
-            .get("/users")
+            .get("/values")
             .end((err, response) => {
                 expect(response).to.have.status(200);
                 done();
@@ -33,7 +33,7 @@ describe("User controller", () => {
 
     it("GET should return JSON", (done) => {
         chai.request(app)
-            .get("/users")
+            .get("/values")
             .end((err, response) => {
                 expect(response).to.be.json;
                 done();
@@ -42,7 +42,7 @@ describe("User controller", () => {
 
     it("should use UTF-8", (done) => {
         chai.request(app)
-            .get("/users")
+            .get("/values")
             .end((err, response) => {
                 // this isn't defined in the Response type, so I'll use any instead
                 const specialResponse: any = response;
@@ -54,7 +54,7 @@ describe("User controller", () => {
 
     it("GET should return an object", (done) => {
         chai.request(app)
-            .get("/users")
+            .get("/values")
             .end((err, response) => {
                 expect(response.body).to.be.an("object");
                 done();
@@ -63,18 +63,18 @@ describe("User controller", () => {
 
     it("GET should return a message", (done) => {
         chai.request(app)
-            .get("/users")
+            .get("/values")
             .end((err, response) => {
                 expect(response.body.message).to.equal("okay");
                 done();
             });
     });
 
-    it("GET should return a greeting", (done) => {
+    it("GET should return an empty values array", (done) => {
         chai.request(app)
-            .get("/users")
+            .get("/values")
             .end((err, response) => {
-                expect(response.body.data.greeting).to.equal("Hello World!");
+                expect(response.body.data.values).to.deep.equal([]);
                 done();
             });
     });
