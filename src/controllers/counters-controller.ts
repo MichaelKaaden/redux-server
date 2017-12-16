@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import { Counter } from "../models/counter";
 import { BaseController } from "./base-controller";
@@ -33,6 +33,7 @@ export class CountersController extends BaseController {
     public getCounter(req: Request, res: Response, next: NextFunction): void {
         const index: number = parseInt(req.params.index, 10);
         const counter = this.getCounterByIndex(index);
+
         this.sendJsonResult(res, 200, "okay", {
             counter,
         });
@@ -65,6 +66,7 @@ export class CountersController extends BaseController {
 
     /**
      * Retrieve the counter by index.
+     * If the counter doesn't exist yet, add it to the list of counters.
      *
      * @param {number} index
      * @return {}
