@@ -1,5 +1,4 @@
 import * as chai from "chai";
-import * as sinon from "sinon";
 
 import chaiHttp = require("chai-http");
 
@@ -14,26 +13,15 @@ const expect = chai.expect;
 //     app = require("../app").default;
 // });
 
+/*
+ * I seem to be unable to reset the Counters controller to an
+ * empty state on each test. That's because the controller is
+ * initialized in the App module. As it returns itself by default,
+ * I'm unable to return the Counters controller instance there,
+ * too. And thanks to strict type checking, I can't add the
+ * controller to the app to be retrieved here.
+ */
 describe("Counters controller", () => {
-    let sandbox: sinon.SinonSandbox;
-
-    beforeEach(() => {
-        sandbox = sinon.sandbox.create();
-    });
-
-    afterEach(() => {
-        sandbox.restore();
-    });
-
-    it("should not fail", (done) => {
-        chai.request(app)
-            .get("/counters")
-            .end((err, response) => {
-                expect(err).to.be.null;
-                done();
-            });
-    });
-
     it("should return status 200", (done) => {
         chai.request(app)
             .get("/counters")
@@ -88,6 +76,74 @@ describe("Counters controller", () => {
             .end((err, response) => {
                 expect(response.body.data.counters).to.deep.equal([]);
                 done();
+            });
+    });
+
+    it("PUT should set counter 5", (done) => {
+        chai.request(app)
+            .put("/counters/5")
+            .send({count: 4711})
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const value = response.body.data.value;
+                expect(value.index).to.equal(5);
+                expect(value.value).to.equal(4711);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(1);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(5, 4711));
+                        done();
+                    });
+            });
+    });
+
+    it("PUT should additionally set counter 0 and return the counters sorted by index", (done) => {
+        chai.request(app)
+            .put("/counters/0")
+            .send({count: 42})
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const value = response.body.data.value;
+                expect(value.index).to.equal(0);
+                expect(value.value).to.equal(42);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(2);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(5, 4711));
+                        done();
+                    });
+            });
+    });
+
+    it("PUT should update counter 5", (done) => {
+        chai.request(app)
+            .put("/counters/5")
+            .send({count: 47})
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const value = response.body.data.value;
+                expect(value.index).to.equal(5);
+                expect(value.value).to.equal(47);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(2);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
             });
     });
 });
