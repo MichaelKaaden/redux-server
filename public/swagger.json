@@ -1,0 +1,80 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Express.js REST API Seed",
+    "description": "Seed for any REST API powered by Express.js",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Greeting",
+        "description": "Sends a greeting.",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "A greeting",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/Greeting"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Greeting": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Response status"
+        },
+        "message": {
+          "type": "string",
+          "description": "A message describing the result."
+        },
+        "data": {
+          "type": "object",
+          "description": "The greeting itself.",
+          "properties": {
+            "greeting": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
