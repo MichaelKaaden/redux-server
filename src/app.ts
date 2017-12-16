@@ -6,7 +6,6 @@ import * as path from "path";
 import * as favicon from "serve-favicon";
 
 import { AppConfiguration } from "./config/app-configuration";
-
 import { CountersController } from "./controllers/counters-controller";
 
 class App {
@@ -34,6 +33,7 @@ class App {
         // inside the controller would be totally wrong!
         this.app.get("/counters", countersController.getCounters.bind(countersController));
         this.app.get("/counters/:index", countersController.getCounter.bind(countersController));
+        this.app.put("/counters/:index", countersController.setCounter.bind(countersController));
 
         // catch 404 and forward to error handler
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
