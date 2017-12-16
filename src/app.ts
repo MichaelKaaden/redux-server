@@ -7,7 +7,7 @@ import * as favicon from "serve-favicon";
 
 import { AppConfiguration } from "./config/app-configuration";
 
-import { ValuesController } from "./controllers/values-controller";
+import { CountersController } from "./controllers/counters-controller";
 
 class App {
     public app: express.Application;
@@ -28,12 +28,12 @@ class App {
         this.app.use(express.static(path.join(__dirname, "../public")));
 
         // my own controllers used in routing
-        const valuesController = new ValuesController();
+        const countersController = new CountersController();
 
         // Don't *ever* forget this bind(...)! Without it, the "this" pointer
         // inside the controller would be totally wrong!
-        this.app.get("/values",
-            valuesController.getValues.bind(valuesController));
+        this.app.get("/counters", countersController.getCounters.bind(countersController));
+        this.app.get("/counters/:index", countersController.getCounter.bind(countersController));
 
         // catch 404 and forward to error handler
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
