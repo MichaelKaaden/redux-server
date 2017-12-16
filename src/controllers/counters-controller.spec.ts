@@ -1,8 +1,10 @@
 import * as chai from "chai";
+import * as sinon from "sinon";
+
 import chaiHttp = require("chai-http");
-import * as mocha from "mocha";
 
 import app from "../../src/app";
+import { Counter } from "../models/counter";
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -13,6 +15,16 @@ const expect = chai.expect;
 // });
 
 describe("Counters controller", () => {
+    let sandbox: sinon.SinonSandbox;
+
+    beforeEach(() => {
+        sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+
     it("should not fail", (done) => {
         chai.request(app)
             .get("/counters")
