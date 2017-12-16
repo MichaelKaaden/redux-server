@@ -18,7 +18,6 @@ export class CountersController extends BaseController {
      * @param {e.NextFunction} next Next middleware
      */
     public getCounters(req: Request, res: Response, next: NextFunction): void {
-        console.log("Getting counters");
         this.sendJsonResult(res, 200, "okay", {
             counters: this._counters.sort((a: Counter, b: Counter) => (a.index < b.index) ? -1 : 1),
         });
@@ -32,7 +31,7 @@ export class CountersController extends BaseController {
      * @param {e.NextFunction} next Next middleware
      */
     public getCounter(req: Request, res: Response, next: NextFunction): void {
-        const index = req.params.index;
+        const index: number = parseInt(req.params.index, 10);
         const counter = this.getCounterByIndex(index);
         this.sendJsonResult(res, 200, "okay", {
             counter,
@@ -52,8 +51,8 @@ export class CountersController extends BaseController {
             return;
         }
 
-        const index = req.params.index;
-        const counter = req.body.count;
+        const index: number = parseInt(req.params.index, 10);
+        const counter = parseInt(req.body.count, 10);
 
         const value = this.getCounterByIndex(index);
         value.value = counter;
@@ -78,6 +77,7 @@ export class CountersController extends BaseController {
             counter = counters[0];
         } else {
             counter = new Counter(index, 0);
+            this._counters.push(counter);
         }
         return counter;
     }
