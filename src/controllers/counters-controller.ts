@@ -124,7 +124,7 @@ export class CountersController extends BaseController {
 
         // return either the real value or 0 if it doesn't exist (default count)
         this.sendJsonResult(res, 200, "okay", {
-            value,
+            counter: value,
         });
     }
 

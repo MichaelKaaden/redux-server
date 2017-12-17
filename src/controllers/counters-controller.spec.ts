@@ -1,9 +1,8 @@
 import * as chai from "chai";
 
-import chaiHttp = require("chai-http");
-
 import app from "../../src/app";
 import { Counter } from "../models/counter";
+import chaiHttp = require("chai-http");
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -87,9 +86,9 @@ describe("Counters controller", () => {
                 expect(err).to.be.null;
                 expect(response).to.have.status(200);
                 expect(response).to.be.json;
-                const value = response.body.data.value;
-                expect(value.index).to.equal(5);
-                expect(value.value).to.equal(4711);
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(5);
+                expect(counter.value).to.equal(4711);
                 chai.request(app)
                     .get("/counters")
                     .end((e, r) => {
@@ -109,9 +108,9 @@ describe("Counters controller", () => {
                 expect(err).to.be.null;
                 expect(response).to.have.status(200);
                 expect(response).to.be.json;
-                const value = response.body.data.value;
-                expect(value.index).to.equal(0);
-                expect(value.value).to.equal(42);
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(0);
+                expect(counter.value).to.equal(42);
                 chai.request(app)
                     .get("/counters")
                     .end((e, r) => {
@@ -132,9 +131,9 @@ describe("Counters controller", () => {
                 expect(err).to.be.null;
                 expect(response).to.have.status(200);
                 expect(response).to.be.json;
-                const value = response.body.data.value;
-                expect(value.index).to.equal(5);
-                expect(value.value).to.equal(47);
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(5);
+                expect(counter.value).to.equal(47);
                 chai.request(app)
                     .get("/counters")
                     .end((e, r) => {
