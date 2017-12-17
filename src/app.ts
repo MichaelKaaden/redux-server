@@ -1,5 +1,6 @@
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
+import * as cors from "cors";
 import * as express from "express";
 import * as logger from "morgan";
 import * as path from "path";
@@ -25,6 +26,26 @@ class App {
         this.app.use(bodyParser.urlencoded({extended: false}));
         this.app.use(cookieParser());
         this.app.use(express.static(path.join(__dirname, "../public")));
+
+        const corsOptions: cors.CorsOptions = {
+            // without exposedHeaders, the Location wouldn't be
+            // exposed in the headers visible to Angular
+            exposedHeaders: [
+                "Connection",
+                "Content-Length",
+                "Date",
+                "ETag",
+                "Location",
+                "Vary",
+                "X-Powered-By",
+            ],
+            origin: [
+                "http://localhost:9000",
+                "https://localhost:9000",
+                process.env.CORS_HOST,
+            ],
+        };
+        this.app.use(cors(corsOptions));
 
         // my own controllers used in routing
         const countersController = new CountersController();
