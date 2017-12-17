@@ -6,16 +6,43 @@ import { BaseController } from "./base-controller";
 export class CountersController extends BaseController {
     private _counters: Counter[] = [];
 
+    /**
+     * @swagger
+     * tags:
+     * - name: "Counter"
+     *   description: "Get, set and update counters"
+     * definitions:
+     *      Counter:
+     *          type: object
+     *          required:
+     *              - index
+     *              - value
+     *          properties:
+     *              index:
+     *                  type: integer
+     *              value:
+     *                  type: integer
+     */
     constructor() {
         super();
     }
 
     /**
-     * Get all values.
-     *
-     * @param {e.Request} req Request
-     * @param {e.Response} res Response
-     * @param {e.NextFunction} next Next middleware
+     * @swagger
+     * /counters:
+     *      get:
+     *          tags:
+     *          - "Counter"
+     *          summary: "Returns all counters."
+     *          produces:
+     *          - application/json
+     *          responses:
+     *              200:
+     *                  description: An array of all counters.
+     *                  schema:
+     *                      type: array
+     *                      items:
+     *                          $ref: '#/definitions/Counter'
      */
     public getCounters(req: Request, res: Response, next: NextFunction): void {
         this.sendJsonResult(res, 200, "okay", {
@@ -24,11 +51,25 @@ export class CountersController extends BaseController {
     }
 
     /**
-     * Get some value.
-     *
-     * @param {e.Request} req Request
-     * @param {e.Response} res Response
-     * @param {e.NextFunction} next Next middleware
+     * @swagger
+     * /counters/{index}:
+     *      get:
+     *          tags:
+     *          - "Counter"
+     *          summary: "Returns the counter at the specified index."
+     *          produces:
+     *              - application/json
+     *          parameters:
+     *              - name: "index"
+     *                description: "The index the counter should be retrieved for"
+     *                in: "path"
+     *                required: true
+     *                type: "integer"
+     *          responses:
+     *              200:
+     *                  description: Counter for the given index
+     *                  schema:
+     *                      $ref: '#/definitions/Counter'
      */
     public getCounter(req: Request, res: Response, next: NextFunction): void {
         const index: number = parseInt(req.params.index, 10);
@@ -40,11 +81,34 @@ export class CountersController extends BaseController {
     }
 
     /**
-     * Set some value.
-     *
-     * @param {e.Request} req Request
-     * @param {e.Response} res Response
-     * @param {e.NextFunction} next Next middleware
+     * @swagger
+     * /counters/{index}:
+     *      put:
+     *          tags:
+     *          - "Counter"
+     *          summary: "Sets the counter at the specified index."
+     *          produces:
+     *              - application/json
+     *          consumes:
+     *              - application/x-www-form-urlencoded
+     *          parameters:
+     *              - name: "index"
+     *                description: "The counter's index"
+     *                in: "path"
+     *                required: true
+     *                type: "integer"
+     *              - name: "count"
+     *                description: "The value the counter should be set to"
+     *                in: "formData"
+     *                type: "integer"
+     *                required: true
+     *          responses:
+     *              200:
+     *                  description: Counter for the given index
+     *                  schema:
+     *                      $ref: '#/definitions/Counter'
+     *              404:
+     *                  description: Body missing
      */
     public setCounter(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.count) {
