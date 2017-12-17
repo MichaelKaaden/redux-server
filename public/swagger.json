@@ -1,5 +1,4 @@
 {
-  "swagger": "2.0",
   "info": {
     "title": "Counter REST API",
     "description": "A simple REST API for counters powered by Express.js",
@@ -9,72 +8,122 @@
   "produces": [
     "application/json"
   ],
+  "swagger": "2.0",
   "paths": {
-    "/users": {
+    "/counters": {
       "get": {
-        "summary": "Greeting",
-        "description": "Sends a greeting.",
         "tags": [
-          "Users"
+          "Counter"
+        ],
+        "summary": "Returns all counters.",
+        "produces": [
+          "application/json"
         ],
         "responses": {
           "200": {
-            "description": "A greeting",
+            "description": "An array of all counters.",
             "schema": {
-              "type": "object",
+              "type": "array",
               "items": {
-                "$ref": "#/definitions/Greeting"
+                "$ref": "#/definitions/Counter"
               }
             }
-          },
-          "default": {
-            "description": "Unexpected error",
+          }
+        }
+      }
+    },
+    "/counters/{index}": {
+      "get": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Returns the counter at the specified index.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The index the counter should be retrieved for",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Counter for the given index",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Counter"
             }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Sets the counter at the specified index.",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The counter's index",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "count",
+            "description": "The value the counter should be set to",
+            "in": "formData",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Counter for the given index",
+            "schema": {
+              "$ref": "#/definitions/Counter"
+            }
+          },
+          "404": {
+            "description": "Body missing"
           }
         }
       }
     }
   },
   "definitions": {
-    "Greeting": {
+    "Counter": {
       "type": "object",
+      "required": [
+        "index",
+        "value"
+      ],
       "properties": {
-        "status": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Response status"
+        "index": {
+          "type": "integer"
         },
-        "message": {
-          "type": "string",
-          "description": "A message describing the result."
-        },
-        "data": {
-          "type": "object",
-          "description": "The greeting itself.",
-          "properties": {
-            "greeting": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "Error": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "fields": {
-          "type": "string"
+        "value": {
+          "type": "integer"
         }
       }
     }
-  }
+  },
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": [
+    {
+      "name": "Counter",
+      "description": "Get, set and update counters"
+    }
+  ]
 }
