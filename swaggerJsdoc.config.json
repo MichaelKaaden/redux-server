@@ -1,0 +1,16 @@
+{
+  "swaggerDefinition": {
+    "info": {
+      "title": "Counter REST API",
+      "description": "A simple REST API providing counters powered by Express.js",
+      "version": "1.0.0"
+    },
+    "basePath": "/",
+    "produces": [
+      "application/json"
+    ]
+  },
+  "apis": [
+    "src/controllers/counters-controller.ts"
+  ]
+}
