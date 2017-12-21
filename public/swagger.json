@@ -72,9 +72,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Counter for the given index",
+            "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Counter"
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
             }
           }
         }
@@ -108,9 +129,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Counter for the given index",
+            "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Counter"
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
             }
           },
           "404": {

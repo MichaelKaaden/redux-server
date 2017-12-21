@@ -83,9 +83,24 @@ export class CountersController extends BaseController {
      *                type: "integer"
      *          responses:
      *              200:
-     *                  description: Counter for the given index
+     *                  description: OK
      *                  schema:
-     *                      $ref: '#/definitions/Counter'
+     *                      type: object
+     *                      properties:
+     *                          data:
+     *                              type: object
+     *                              properties:
+     *                                  counter:
+     *                                      type: object
+     *                                      $ref: '#/definitions/Counter'
+     *                          message:
+     *                              type: string
+     *                              description: okay
+     *                              example: okay
+     *                          status:
+     *                              type: integer
+     *                              description: HTTP status code
+     *                              example: 200
      */
     public getCounter(req: Request, res: Response, next: NextFunction): void {
         const index: number = parseInt(req.params.index, 10);
@@ -120,9 +135,24 @@ export class CountersController extends BaseController {
      *                required: true
      *          responses:
      *              200:
-     *                  description: Counter for the given index
+     *                  description: OK
      *                  schema:
-     *                      $ref: '#/definitions/Counter'
+     *                      type: object
+     *                      properties:
+     *                          data:
+     *                              type: object
+     *                              properties:
+     *                                  counter:
+     *                                      type: object
+     *                                      $ref: '#/definitions/Counter'
+     *                          message:
+     *                              type: string
+     *                              description: okay
+     *                              example: okay
+     *                          status:
+     *                              type: integer
+     *                              description: HTTP status code
+     *                              example: 200
      *              404:
      *                  description: Body missing
      */
