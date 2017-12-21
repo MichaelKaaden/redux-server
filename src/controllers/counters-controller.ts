@@ -20,8 +20,10 @@ export class CountersController extends BaseController {
      *          properties:
      *              index:
      *                  type: integer
+     *                  example: 0
      *              value:
      *                  type: integer
+     *                  example: 42
      */
     constructor() {
         super();
@@ -38,11 +40,25 @@ export class CountersController extends BaseController {
      *          - application/json
      *          responses:
      *              200:
-     *                  description: An array of all counters.
+     *                  description: OK
      *                  schema:
-     *                      type: array
-     *                      items:
-     *                          $ref: '#/definitions/Counter'
+     *                      type: object
+     *                      properties:
+     *                          data:
+     *                              type: object
+     *                              properties:
+     *                                  counters:
+     *                                      type: array
+     *                                      items:
+     *                                          $ref: '#/definitions/Counter'
+     *                          message:
+     *                              type: string
+     *                              description: okay
+     *                              example: okay
+     *                          status:
+     *                              type: integer
+     *                              description: HTTP status code
+     *                              example: 200
      */
     public getCounters(req: Request, res: Response, next: NextFunction): void {
         this.sendJsonResult(res, 200, "okay", {

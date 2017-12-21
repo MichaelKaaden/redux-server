@@ -1,7 +1,7 @@
 {
   "info": {
     "title": "Counter REST API",
-    "description": "A simple REST API for counters powered by Express.js",
+    "description": "A simple REST API providing counters powered by Express.js",
     "version": "1.0.0"
   },
   "basePath": "/",
@@ -21,11 +21,31 @@
         ],
         "responses": {
           "200": {
-            "description": "An array of all counters.",
+            "description": "OK",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Counter"
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counters": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Counter"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
               }
             }
           }
@@ -109,10 +129,12 @@
       ],
       "properties": {
         "index": {
-          "type": "integer"
+          "type": "integer",
+          "example": 0
         },
         "value": {
-          "type": "integer"
+          "type": "integer",
+          "example": 42
         }
       }
     }
