@@ -168,4 +168,149 @@ describe("Counters controller", () => {
                     });
             });
     });
+
+    it("Increment should increment counter 1 by 1", (done) => {
+        chai.request(app)
+            .put("/counters/1/increment")
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(1);
+                expect(counter.value).to.equal(1);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(3);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 1));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
+            });
+    });
+
+    it("Increment should increment counter 1 by 3", (done) => {
+        chai.request(app)
+            .put("/counters/1/increment")
+            .send({by: 3})
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(1);
+                expect(counter.value).to.equal(4);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(3);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 4));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
+            });
+    });
+
+    it("Decrement should decrement counter 1 by 1", (done) => {
+        chai.request(app)
+            .put("/counters/1/decrement")
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(1);
+                expect(counter.value).to.equal(3);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(3);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 3));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
+            });
+    });
+
+    it("Decrement should decrement counter 1 by 3", (done) => {
+        chai.request(app)
+            .put("/counters/1/decrement")
+            .send({by: 3})
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(1);
+                expect(counter.value).to.equal(0);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(3);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
+            });
+    });
+
+    it("Increment should add a counter to the counter list", (done) => {
+        chai.request(app)
+            .put("/counters/2/increment")
+            .send({by: 2})
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(2);
+                expect(counter.value).to.equal(2);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(4);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(2, 2));
+                        expect(r.body.data.counters[3]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
+            });
+    });
+
+    it("Decrement should add a counter to the counter list", (done) => {
+        chai.request(app)
+            .put("/counters/3/decrement")
+            .send({by: 9})
+            .end((err, response) => {
+                expect(err).to.be.null;
+                expect(response).to.have.status(200);
+                expect(response).to.be.json;
+                const counter = response.body.data.counter;
+                expect(counter.index).to.equal(3);
+                expect(counter.value).to.equal(-9);
+                chai.request(app)
+                    .get("/counters")
+                    .end((e, r) => {
+                        expect(e).to.be.null;
+                        expect(r.body.data.counters.length).to.equal(5);
+                        expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(2, 2));
+                        expect(r.body.data.counters[3]).to.deep.equal(new Counter(3, -9));
+                        expect(r.body.data.counters[4]).to.deep.equal(new Counter(5, 47));
+                        done();
+                    });
+            });
+    });
 });

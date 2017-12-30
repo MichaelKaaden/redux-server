@@ -160,6 +160,126 @@
           }
         }
       }
+    },
+    "/counters/{index}/decrement": {
+      "put": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Decrements the counter at the specified index by the given value.",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The counter's index",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "by",
+            "description": "The value the counter should be decremented with (or 1 if missing)",
+            "default": 1,
+            "in": "formData",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/counters/{index}/increment": {
+      "put": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Increments the counter at the specified index by the given value.",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The counter's index",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "by",
+            "description": "The value the counter should be incremented with (or 1 if missing)",
+            "default": 1,
+            "in": "formData",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

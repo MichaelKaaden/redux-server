@@ -55,6 +55,8 @@ class App {
         this.app.get("/counters", countersController.getCounters.bind(countersController));
         this.app.get("/counters/:index", countersController.getCounter.bind(countersController));
         this.app.put("/counters/:index", countersController.setCounter.bind(countersController));
+        this.app.put("/counters/:index/decrement", countersController.decrementCounter.bind(countersController));
+        this.app.put("/counters/:index/increment", countersController.incrementCounter.bind(countersController));
 
         // catch 404 and forward to error handler
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

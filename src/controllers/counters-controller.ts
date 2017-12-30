@@ -175,6 +175,126 @@ export class CountersController extends BaseController {
     }
 
     /**
+     * @swagger
+     * /counters/{index}/decrement:
+     *      put:
+     *          tags:
+     *          - "Counter"
+     *          summary: "Decrements the counter at the specified index by the given value."
+     *          produces:
+     *              - application/json
+     *          consumes:
+     *              - application/x-www-form-urlencoded
+     *          parameters:
+     *              - name: "index"
+     *                description: "The counter's index"
+     *                in: "path"
+     *                required: true
+     *                type: "integer"
+     *              - name: "by"
+     *                description: "The value the counter should be decremented with (or 1 if missing)"
+     *                default: 1
+     *                in: "formData"
+     *                type: "integer"
+     *                required: false
+     *          responses:
+     *              200:
+     *                  description: OK
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          data:
+     *                              type: object
+     *                              properties:
+     *                                  counter:
+     *                                      type: object
+     *                                      $ref: '#/definitions/Counter'
+     *                          message:
+     *                              type: string
+     *                              description: okay
+     *                              example: okay
+     *                          status:
+     *                              type: integer
+     *                              description: HTTP status code
+     *                              example: 200
+     */
+    public decrementCounter(req: Request, res: Response, next: NextFunction): void {
+        const index: number = parseInt(req.params.index, 10);
+        let by: number = 1;
+
+        if (req.body.by) {
+            by = parseInt(req.body.by, 10);
+        }
+
+        const value = this.getCounterByIndex(index);
+        value.value -= by;
+
+        this.sendJsonResult(res, 200, "okay", {
+            counter: value,
+        });
+    }
+
+    /**
+     * @swagger
+     * /counters/{index}/increment:
+     *      put:
+     *          tags:
+     *          - "Counter"
+     *          summary: "Increments the counter at the specified index by the given value."
+     *          produces:
+     *              - application/json
+     *          consumes:
+     *              - application/x-www-form-urlencoded
+     *          parameters:
+     *              - name: "index"
+     *                description: "The counter's index"
+     *                in: "path"
+     *                required: true
+     *                type: "integer"
+     *              - name: "by"
+     *                description: "The value the counter should be incremented with (or 1 if missing)"
+     *                default: 1
+     *                in: "formData"
+     *                type: "integer"
+     *                required: false
+     *          responses:
+     *              200:
+     *                  description: OK
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          data:
+     *                              type: object
+     *                              properties:
+     *                                  counter:
+     *                                      type: object
+     *                                      $ref: '#/definitions/Counter'
+     *                          message:
+     *                              type: string
+     *                              description: okay
+     *                              example: okay
+     *                          status:
+     *                              type: integer
+     *                              description: HTTP status code
+     *                              example: 200
+     */
+    public incrementCounter(req: Request, res: Response, next: NextFunction): void {
+        const index: number = parseInt(req.params.index, 10);
+        let by: number = 1;
+
+        if (req.body.by) {
+            by = parseInt(req.body.by, 10);
+        }
+
+        const value = this.getCounterByIndex(index);
+        value.value += by;
+
+        this.sendJsonResult(res, 200, "okay", {
+            counter: value,
+        });
+    }
+
+    /**
      * Retrieve the counter by index.
      * If the counter doesn't exist yet, add it to the list of counters.
      *
