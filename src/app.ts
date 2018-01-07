@@ -40,6 +40,7 @@ class App {
                 "X-Powered-By",
             ],
             origin: [
+                "http://localhost:4200",
                 "http://localhost:9000",
                 "https://localhost:9000",
                 process.env.CORS_HOST,
