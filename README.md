@@ -1,7 +1,15 @@
-# Express REST API Seed
+# Redux Server
 
-This little project can be used as seed for any REST API
-written using TypeScript, Node.js and Express.js.
+This is a tiny REST service managing counters.
+
+Each counter has
+- a unique index (a number greater or equal 0)
+- a value
+
+You can view and try out the API using the Swagger UI
+included in this project.
+
+## Project Initialization
 
 It was initialized using the express generator. That's the
 reason it still uses the `bin/www` file for startup. I had
@@ -26,13 +34,11 @@ for example `watch:test`.
 
 ## Running the app
 
-You need to set the environment variable `NODE_ENV`
-to `development`. If you're on any UNIX-like system
-like macOS or Linux, this will be done automatically if
-you run the app in dev mode using `npm run dev`.
+To run the app in dev mode, use `npm run dev`. Else,
+you may find `npm run start` useful.
 
 ## API Documentation
 
-This seed uses Swagger-UI for documentation purposes. As
-[this stackoverflow answer](http://stackoverflow.com/questions/31300756/can-swagger-autogenerate-its-yaml-based-on-existing-express-routes)
-suggests, you need to create the swagger.json manually.
+This seed uses Swagger-UI for documentation purposes.
+Run `npm run swagger` to create it every time you change
+the API. The latest version is commited to this repo.
