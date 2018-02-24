@@ -1,0 +1,313 @@
+{
+  "info": {
+    "title": "Counter REST API",
+    "description": "A simple REST API providing counters powered by Express.js",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/counters": {
+      "get": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Returns all counters.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counters": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Counter"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/counters/{index}": {
+      "get": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Returns the counter at the specified index.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The index the counter should be retrieved for",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Sets the counter at the specified index.",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The counter's index",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "count",
+            "description": "The value the counter should be set to",
+            "in": "formData",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Body missing"
+          }
+        }
+      }
+    },
+    "/counters/{index}/decrement": {
+      "put": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Decrements the counter at the specified index by the given value.",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The counter's index",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "by",
+            "description": "The value the counter should be decremented with (or 1 if missing)",
+            "default": 1,
+            "in": "formData",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/counters/{index}/increment": {
+      "put": {
+        "tags": [
+          "Counter"
+        ],
+        "summary": "Increments the counter at the specified index by the given value.",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "index",
+            "description": "The counter's index",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "by",
+            "description": "The value the counter should be incremented with (or 1 if missing)",
+            "default": 1,
+            "in": "formData",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "counter": {
+                      "type": "object",
+                      "$ref": "#/definitions/Counter"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "okay",
+                  "example": "okay"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code",
+                  "example": 200
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Counter": {
+      "type": "object",
+      "required": [
+        "index",
+        "value"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "example": 0
+        },
+        "value": {
+          "type": "integer",
+          "example": 42
+        }
+      }
+    }
+  },
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": [
+    {
+      "name": "Counter",
+      "description": "Get, set and update counters"
+    }
+  ]
+}
