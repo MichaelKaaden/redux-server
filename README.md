@@ -24,9 +24,9 @@ some counters before showing anything to your audience.
 This server is written in TypeScript. You need to compile
 the code to JavaScript for Node.js to be able to be run it.
 
-To compile the app initially, use `npm run gulp`.
+To compile the app initially, use `yarn run gulp`.
 To automatically compile the sources on each 
-change, use `npm run watch`.
+change, use `yarn run watch`.
 
 Looking inside the gulpfile.js you'll find some other
 tasks that might help you in developing the application,
@@ -34,13 +34,13 @@ for example `watch:test`.
 
 ## Running the service
 
-To run the app in dev mode, use `npm run dev`. Else,
-you may find `npm run start` useful.
+To run the app in dev mode, use `yarn run dev`. Else,
+you may find `yarn run start` useful.
 
 ## API Documentation
 
 This seed uses Swagger-UI for documentation purposes.
-Run `npm run swagger` to create it every time you change
+Run `yarn run swagger` to create it every time you change
 the API. The latest version is commited to this repo.
 
 ## History
