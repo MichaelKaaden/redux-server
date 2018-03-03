@@ -19,6 +19,9 @@ should get it and then use the increment or decrement operations
 on it. For presentations, it is a reasonable choice to set
 some counters before showing anything to your audience.
 
+The client side to this service resides in
+[https://github.com/MichaelKaaden/redux-client-ng5](https://github.com/MichaelKaaden/redux-client-ng5).
+
 ## Compiling the service
 
 This server is written in TypeScript. You need to compile
