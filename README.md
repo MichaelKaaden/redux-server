@@ -1,5 +1,8 @@
 # Redux Server
 
+[![GitHub version](https://badge.fury.io/gh/MichaelKaaden%2Fredux-server.svg)](https://badge.fury.io/gh/MichaelKaaden%2Fredux-server)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 This is a tiny REST service managing counters. The counters
 are kept in memory, so they are reset every time you restart
 the service.
