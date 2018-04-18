@@ -1,7 +1,10 @@
 # Redux Server
 
-[![GitHub version](https://badge.fury.io/gh/MichaelKaaden%2Fredux-server.svg)](https://badge.fury.io/gh/MichaelKaaden%2Fredux-server)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub last commit](https://img.shields.io/github/last-commit/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/commits/master)
+[![GitHub tag](https://img.shields.io/github/tag/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/releases)
+[![GitHub version](https://img.shields.io/github/package-json/v/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/blob/master/package.json)
+[![GitHub issues](https://img.shields.io/github/issues/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/issues)
+[![license](https://img.shields.io/github/license/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server)
 
 This is a tiny REST service managing counters. The counters
 are kept in memory, so they are reset every time you restart
