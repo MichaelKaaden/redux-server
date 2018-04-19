@@ -3,8 +3,8 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/commits/master)
 [![GitHub tag](https://img.shields.io/github/tag/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/releases)
 [![GitHub version](https://img.shields.io/github/package-json/v/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/blob/master/package.json)
-[![dependencies](https://img.shields.io/david/MichaelKaaden/redux-server.svg)](https://img.shields.io/david/MichaelKaaden/redux-server)
-[![devDependencies](https://img.shields.io/david/dev/MichaelKaaden/redux-server.svg)](https://img.shields.io/david/dev/MichaelKaaden/redux-server)
+[![dependencies](https://img.shields.io/david/MichaelKaaden/redux-server.svg)](https://david-dm.org/MichaelKaaden/redux-server)
+[![devDependencies](https://img.shields.io/david/dev/MichaelKaaden/redux-server.svg)](https://david-dm.org/MichaelKaaden/redux-server?type=dev)
 [![GitHub issues](https://img.shields.io/github/issues/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server/issues)
 [![license](https://img.shields.io/github/license/MichaelKaaden/redux-server.svg)](https://github.com/MichaelKaaden/redux-server)
 
