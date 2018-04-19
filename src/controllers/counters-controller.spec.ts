@@ -1,8 +1,8 @@
 import * as chai from "chai";
+import chaiHttp = require("chai-http");
 
 import app from "../../src/app";
 import { Counter } from "../models/counter";
-import chaiHttp = require("chai-http");
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -11,6 +11,8 @@ const expect = chai.expect;
 // beforeEach('load app', () => {
 //     app = require("../app").default;
 // });
+
+/* tslint:disable:no-unused-expression */
 
 /*
  * I seem to be unable to reset the Counters controller to an
