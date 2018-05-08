@@ -128,21 +128,21 @@ describe("Counters controller", () => {
     it("PUT should update counter 5", (done) => {
         chai.request(app)
             .put("/counters/5")
-            .send({count: 47})
+            .send({count: 0})
             .end((err, response) => {
                 expect(err).to.be.null;
                 expect(response).to.have.status(200);
                 expect(response).to.be.json;
                 const counter = response.body.data.counter;
                 expect(counter.index).to.equal(5);
-                expect(counter.value).to.equal(47);
+                expect(counter.value).to.equal(0);
                 chai.request(app)
                     .get("/counters")
                     .end((e, r) => {
                         expect(e).to.be.null;
                         expect(r.body.data.counters.length).to.equal(2);
                         expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
-                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[1]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });
@@ -165,7 +165,7 @@ describe("Counters controller", () => {
                         expect(r.body.data.counters.length).to.equal(3);
                         expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
                         expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
-                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });
@@ -188,7 +188,7 @@ describe("Counters controller", () => {
                         expect(r.body.data.counters.length).to.equal(3);
                         expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
                         expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 1));
-                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });
@@ -212,7 +212,7 @@ describe("Counters controller", () => {
                         expect(r.body.data.counters.length).to.equal(3);
                         expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
                         expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 4));
-                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });
@@ -235,7 +235,7 @@ describe("Counters controller", () => {
                         expect(r.body.data.counters.length).to.equal(3);
                         expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
                         expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 3));
-                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });
@@ -259,7 +259,7 @@ describe("Counters controller", () => {
                         expect(r.body.data.counters.length).to.equal(3);
                         expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
                         expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
-                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[2]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });
@@ -284,7 +284,7 @@ describe("Counters controller", () => {
                         expect(r.body.data.counters[0]).to.deep.equal(new Counter(0, 42));
                         expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
                         expect(r.body.data.counters[2]).to.deep.equal(new Counter(2, 2));
-                        expect(r.body.data.counters[3]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[3]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });
@@ -310,7 +310,7 @@ describe("Counters controller", () => {
                         expect(r.body.data.counters[1]).to.deep.equal(new Counter(1, 0));
                         expect(r.body.data.counters[2]).to.deep.equal(new Counter(2, 2));
                         expect(r.body.data.counters[3]).to.deep.equal(new Counter(3, -9));
-                        expect(r.body.data.counters[4]).to.deep.equal(new Counter(5, 47));
+                        expect(r.body.data.counters[4]).to.deep.equal(new Counter(5, 0));
                         done();
                     });
             });

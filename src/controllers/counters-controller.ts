@@ -157,7 +157,7 @@ export class CountersController extends BaseController {
      *                  description: Body missing
      */
     public setCounter(req: Request, res: Response, next: NextFunction): void {
-        if (!req.body.count) {
+        if (req.body.count === undefined) {
             res.status(404).json("Body required");
             return;
         }
