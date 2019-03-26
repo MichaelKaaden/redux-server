@@ -5,7 +5,6 @@ const bump = require('gulp-bump');
 const del = require('del');
 const gutil = require('gulp-util');
 const mocha = require('gulp-mocha');
-const runSequence = require('run-sequence');
 const ts = require('gulp-typescript');
 const tslint = require('gulp-tslint');
 
@@ -19,116 +18,103 @@ const specGlob = sourceDest + '/**/*.spec.js';
 const tsGlob = 'src/**/*.ts';
 const viewGlob = 'views/**/*.pug';
 
-// pull in the project's TypeScript config
 const tsProject = ts.createProject('tsconfig.json');
-// tsProject(ts.reporter.longReporter());
 
-// gulp.on('stop', function () {
-//     process.exit(0);
-// });
-// gulp.on('err', function () {
-//     process.exit(1);
-// });
-
-gulp.task('sources', ['tslint'], function () {
+const compile = () => {
     const tsResult = tsProject.src().pipe(tsProject());
     return tsResult.js.pipe(gulp.dest(sourceDest));
-});
+};
 
-gulp.task('tslint', function () {
-        return gulp
-            .src(tsGlob)
-            .pipe(tslint({
-                formatter: 'stylish'
-            }))
-            .pipe(tslint.report({
-                emitError: false,
-                summarizeFailureOutput: true
-            }));
-    }
-);
+const lint = () => {
+    return gulp
+        .src(tsGlob)
+        .pipe(tslint({
+            formatter: 'stylish'
+        }))
+        .pipe(tslint.report({
+            emitError: false,
+            summarizeFailureOutput: true
+        }));
+};
 
-// gulp-mocha is known to hang, see https://github.com/netdeckyr/netdeckyr/issues/2
-gulp.task('test', ['sources'], function () {
+const compileAndLint = gulp.series(lint, compile);
+
+const runMocha = () => {
     return gulp.src([specGlob], {read: false})
         .pipe(mocha({reporter: 'spec'}))
         .on('error', gutil.log);
-});
+};
 
-gulp.task('public', function () {
+const test = gulp.series(compileAndLint, runMocha);
+
+const publicDir = () => {
     return gulp
         .src(publicGlob)
         .pipe(gulp.dest(dest + '/public'));
-});
+};
 
-gulp.task('views', function () {
+const views = () => {
     return gulp
         .src(viewGlob)
         .pipe(gulp.dest(dest + '/views'));
-});
+};
 
-gulp.task('watch:dev', function (callback) {
-    runSequence(
-        'clean:dist',
-        ['public', 'sources', 'views'],
-        callback);
-    gulp.watch(publicGlob, ['public']);
-    gulp.watch(tsGlob, ['sources']);
-    gulp.watch(viewGlob, ['views']);
-});
+const cleanDist = () => del(dest);
 
-gulp.task('watch:test', function (callback) {
-    runSequence(
-        'clean:dist',
-        ['public', 'sources', 'views'],
-        'test',
-        callback);
-    gulp.watch(publicGlob, ['public']);
-    gulp.watch(tsGlob, ['sources', 'test']);
-    gulp.watch(viewGlob, ['views']);
-});
+const cleanTest = () => del(specGlob);
 
-gulp.task('clean:dist', function () {
-    return del.sync(dest);
-});
+const doWatch = () => gulp.parallel(gulp.watch(publicGlob, publicDir),
+    gulp.watch(tsGlob, gulp.series(compileAndLint, test)),
+    gulp.watch(viewGlob, views));
 
-gulp.task('clean:test', function () {
-    return del.sync(specGlob);
-});
+const copyAndBuild = gulp.parallel(publicDir, compileAndLint, views)
+
+const watchDev = gulp.series(cleanDist, copyAndBuild, doWatch);
+
+const watchTest = gulp.series(cleanDist, copyAndBuild, test, doWatch);
 
 /*
  * Handle version numbers
  */
-gulp.task('bump:major', function () {
+const bumpMajor = () => {
     gulp.src(bumpSrc)
         .pipe(bump({type: 'major'}))
         .pipe(gulp.dest('./'));
-});
-gulp.task('bump:minor', function () {
+};
+
+const bumpMinor = () => {
     gulp.src(bumpSrc)
         .pipe(bump({type: 'minor'}))
         .pipe(gulp.dest('./'));
-});
-gulp.task('bump:patch', function () {
+};
+
+const bumpPatch = () => {
     gulp.src(bumpSrc)
         .pipe(bump({type: 'patch'}))
         .pipe(gulp.dest('./'));
-});
-gulp.task('bump:prerelease', function () {
+};
+
+const bumpPrerelease = () => {
     gulp.src(bumpSrc)
         .pipe(bump({type: 'prerelease'}))
         .pipe(gulp.dest('./'));
-});
+};
 
-gulp.task('default', function (callback) {
-    // without this, the 'test' task would hang indefinitely
-    gulp.on('stop', function () {
-        process.exit(0);
-    });
-    runSequence(
-        'clean:dist',
-        ['public', 'sources', 'views'],
-        'test',
-        'clean:test',
-        callback);
-});
+const build = gulp.series(cleanDist, copyAndBuild, test, cleanTest)
+
+// ==============================
+
+exports.build = build;
+exports.bumpMajor = bumpMajor;
+exports.bumpMinor = bumpMinor;
+exports.bumpPatch = bumpPatch;
+exports.bumpPrerelease = bumpPrerelease;
+exports.cleanDist = cleanDist;
+exports.cleanTest = cleanTest;
+exports.compileAndLint = compileAndLint;
+exports.lint = lint;
+exports.test = test;
+exports.watchDev = watchDev;
+exports.watchTest = watchTest;
+
+exports.default = build;
